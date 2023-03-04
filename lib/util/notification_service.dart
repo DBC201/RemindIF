@@ -6,7 +6,7 @@ class NotificationService {
   InitializationSettings? initializationSettings;
   AndroidNotificationDetails androidPlatformChannelSpecifics =
   AndroidNotificationDetails(
-      'remind_if_main', 'Remind if location reminder', channelDescription: '',
+      'remind_if_main', 'location reminder', channelDescription: '',
       importance: Importance.high, priority: Priority.high);
 
   NotificationDetails? platformChannelSpecifics;

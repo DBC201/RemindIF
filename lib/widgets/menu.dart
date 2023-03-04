@@ -17,7 +17,7 @@ class Menu extends StatelessWidget {
             itemCount: provider.markerItems?.length,
             itemBuilder: (BuildContext context, int index) {
               final key = provider.markerItems?.keys.elementAt(index);
-              final value = provider.markerItems![key];
+              final value = provider.markerItems?[key];
               return ListTile(
                 title: Text(value?.title ?? ''),
                 onTap: () async {

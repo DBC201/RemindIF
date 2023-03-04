@@ -1,29 +1,30 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:remind_if/models/marker_adapter.dart';
 import 'package:remind_if/providers/map_controller_provider.dart';
 import 'package:remind_if/providers/marker_provider.dart';
+import 'package:remind_if/util/background_service.dart';
 import 'package:remind_if/util/notification_service.dart';
 import 'package:remind_if/widgets/map_widget.dart';
 import 'package:remind_if/widgets/menu.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:flutter_config/flutter_config.dart';
+
+BackgroundService backgroundService = BackgroundService();
+
+bool has_permission = false;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await FlutterConfig.loadEnvVariables();
   var appDocDir = await getApplicationDocumentsDirectory();
   Hive.init(appDocDir.path);
   Hive.registerAdapter(MarkerAdapterAdapter());
+  await dotenv.load();
   runApp(const MyApp());
-  await Permission.notification.isDenied.then((value) {
-    if (value) {
-      //Permission.notification.request();
-      notificationService.notify("welcome to Remind If", '');
-    }
-  });
 }
 
 class MyApp extends StatelessWidget {
@@ -64,6 +65,55 @@ class _MyMapState extends State<MyMap> {
   @override
   void initState() {
     super.initState();
+    checkPermissions();
+  }
+
+  Future<void> checkPermissions() async {
+    if (has_permission) {
+      return;
+    }
+    bool notificationPermission = await Permission.notification.isGranted;
+    if (!notificationPermission) {
+      var askAgain = await Permission.notification.request();
+      if (askAgain.isDenied) {
+        await notificationService.notify("welcome to Remind If", '');
+      }
+    }
+    bool notificationGranted = await Permission.notification.isGranted;
+    bool locationGranted = await Permission.locationAlways.isGranted;
+
+    if (!notificationGranted || !locationGranted) {
+      await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Inadequate Permissions"),
+            content: Text("${!notificationGranted ? "\"Notifications\"" : ''} ${!notificationGranted && !locationGranted ? 'and' : ''} ${!locationGranted ? "\"Allow Location all the time\"" : ''} disabled. Please enable these permissions from settings. A restart is needed."),
+            actions: [
+              TextButton(
+                child: Text("Settings"),
+                onPressed: () {
+                  openAppSettings();
+                },
+              ),
+              TextButton(onPressed: () {
+                if (Platform.isAndroid) {
+                  SystemNavigator.pop();
+                }
+                else if (Platform.isIOS) {
+                  exit(0);
+                }
+              }, child: Text("Quit"))
+            ],
+          );
+        },
+      );
+    }
+    else {
+      backgroundService.init();
+      has_permission = true;
+    }
   }
 
   @override
@@ -71,7 +121,7 @@ class _MyMapState extends State<MyMap> {
     return Scaffold(
       drawer: Drawer(child: Menu()),
       appBar: AppBar(
-        title: const Text('Remind If'),
+        title: const Text('RemindIF'),
         backgroundColor: Theme.of(context).primaryColor
       ),
       body: MapWidget(parentContext: context,)

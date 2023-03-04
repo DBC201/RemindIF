@@ -13,4 +13,5 @@ google_maps_api_key="api_key"
 ```
 
 ### Notes
-- App name can be changed from /android/app/src/AndroidManifest.xml ```android:label="Remind If"```
+- App name can be changed from /android/app/src/AndroidManifest.xml ```android:label="RemindIF"```
+- ```flutter logs``` can be used to view logs from device while running release app

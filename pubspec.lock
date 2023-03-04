@@ -36,6 +36,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.9.0"
+  background_locator_2:
+    dependency: "direct main"
+    description:
+      name: background_locator_2
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.5"
   boolean_selector:
     dependency: transitive
     description:
@@ -210,12 +217,19 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_config:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: flutter_config
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  flutter_dotenv:
+    dependency: "direct main"
+    description:
+      name: flutter_dotenv
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.0.2"
   flutter_google_places:
     dependency: "direct main"
     description:
@@ -224,7 +238,7 @@ packages:
     source: hosted
     version: "0.3.0"
   flutter_launcher_icons:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: flutter_launcher_icons
       url: "https://pub.dartlang.org"

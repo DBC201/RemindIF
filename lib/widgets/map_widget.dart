@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:google_api_headers/google_api_headers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -17,7 +18,6 @@ import '../providers/map_controller_provider.dart';
 import '../providers/marker_provider.dart';
 import 'add_marker.dart';
 
-import 'package:flutter_config/flutter_config.dart';
 
 class MapWidget extends StatefulWidget {
   BuildContext parentContext;
@@ -41,9 +41,21 @@ class _MapWidget extends State<MapWidget> {
   void initState() {
     super.initState();
 
+    if (kDebugMode) {
+      print("map widget initialized");
+    }
+
     location.onLocationChanged.listen((loc.LocationData currentLocation) async {
+      if (kDebugMode) {
+        print("location foreground callback ran");
+      }
+
       currentPosition = currentLocation;
+
       if (!completer.isCompleted) {
+        if (kDebugMode) {
+          print("completer for location foreground done");
+        }
         parentContext.read<MarkerProvider>().initMarkers(parentContext);
         completer.complete(true);
       }
@@ -96,7 +108,7 @@ class _MapWidget extends State<MapWidget> {
 
   Future<void> displayPrediction(Prediction p) async {
     GoogleMapsPlaces places = GoogleMapsPlaces(
-        apiKey: FlutterConfig.get("google_maps_api_key"),
+        apiKey: dotenv.get("google_maps_api_key"),
         apiHeaders: await const GoogleApiHeaders().getHeaders()
     );
 
@@ -115,13 +127,17 @@ class _MapWidget extends State<MapWidget> {
   }
 
   Future<void> _handlePressButton() async {
+    if (kDebugMode) {
+      print("button pressed");
+      print(dotenv.get("google_maps_api_key"));
+    }
     Prediction? p = await PlacesAutocomplete.show(
         context: context,
-        apiKey: FlutterConfig.get("google_maps_api_key"),
+        apiKey: dotenv.get("google_maps_api_key"),
         mode: Mode.overlay,
         language: 'en',
+        types: [],
         strictbounds: false,
-        types: [""],
         decoration: InputDecoration(
             hintText: 'Search',
             focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(20), borderSide: BorderSide(color: Colors.white))), components: []);
