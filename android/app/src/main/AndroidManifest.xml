@@ -14,9 +14,6 @@
            android:exported="true"
            android:foregroundServiceType = "location"/>
        <meta-data
-           android:name="flutterEmbedding"
-           android:value="2" />
-       <meta-data
            android:name="com.google.android.geo.API_KEY"
            android:value="@string/google_maps_api_key" />
         <activity
@@ -45,5 +42,9 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+       <service
+           android:name="com.dexterous.flutterlocalnotifications.ForegroundService"
+           android:exported="false"
+           android:stopWithTask="false"/>
     </application>
 </manifest>

@@ -9,7 +9,8 @@ import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:math';
 
-import '../models/marker_adapter.dart';
+
+import '../models/circle_adapter.dart';
 import 'notification_service.dart';
 
 
@@ -23,8 +24,8 @@ class BackgroundService{
   static void callback(LocationDto location) async {
     var appDocDir = await getApplicationDocumentsDirectory();
     Hive.init(appDocDir.path);
-    if (!Hive.isAdapterRegistered(MarkerAdapterAdapter().typeId)) {
-      Hive.registerAdapter(MarkerAdapterAdapter());
+    if (!Hive.isAdapterRegistered(CircleAdapterAdapter().typeId)) {
+      Hive.registerAdapter(CircleAdapterAdapter());
     }
 
     var box = await Hive.openBox("markerBox");
@@ -44,14 +45,14 @@ class BackgroundService{
 
     for (var key in markerBox.keys) {
       var val = markerBox.get(key);
-      int proximity = val.meterProximity;
+      double radius = val.radius;
 
       double distance = SphericalUtils.computeDistanceBetween(
           Point(location.latitude,
               location.longitude),
           Point(val.latitude,
               val.longtitude));
-      if (distance <= proximity) {
+      if (distance <= radius) {
         notificationService.notify(
             'You are here!', '${val.title} is reached.');
         keysToBeDeleted.add(key);

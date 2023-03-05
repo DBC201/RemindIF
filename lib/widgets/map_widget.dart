@@ -9,14 +9,14 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:location/location.dart' as loc;
 import 'package:provider/provider.dart';
-import 'package:remind_if/models/marker_item.dart';
+import 'package:remind_if/models/circle_item.dart';
 import 'package:google_maps_utils/google_maps_utils.dart' as gm_utils;
 import 'package:remind_if/util/notification_service.dart';
 import 'dart:math';
 
 import '../providers/map_controller_provider.dart';
-import '../providers/marker_provider.dart';
-import 'add_marker.dart';
+import '../providers/circle_provider.dart';
+import 'add_circle.dart';
 
 
 class MapWidget extends StatefulWidget {
@@ -34,6 +34,7 @@ class _MapWidget extends State<MapWidget> {
   final loc.Location location = loc.Location();
   Completer<bool> completer = Completer();
   BuildContext parentContext;
+  Set<Marker> markers = {};
 
   _MapWidget({required this.parentContext});
 
@@ -56,7 +57,7 @@ class _MapWidget extends State<MapWidget> {
         if (kDebugMode) {
           print("completer for location foreground done");
         }
-        parentContext.read<MarkerProvider>().initMarkers(parentContext);
+        parentContext.read<CircleProvider>().init(parentContext);
         completer.complete(true);
       }
       /*
@@ -69,33 +70,33 @@ class _MapWidget extends State<MapWidget> {
             zoom: 15,
           ));
        */
-      final markerProvider = parentContext.read<MarkerProvider>();
+      final circleProvider = parentContext.read<CircleProvider>();
 
-      if (markerProvider.markerItems != null) {
-        List<MarkerId> markers_to_be_deleted = [];
+      if (circleProvider.circleItems != null) {
+        List<CircleId> circles_to_be_deleted = [];
 
-        var entries = markerProvider.markerItems?.entries;
+        var entries = circleProvider.circleItems?.entries;
 
         for (var item in entries!) {
-          MarkerItem markerItem = item.value;
-          int proximity = markerItem.meterProximity;
+          CircleItem circleItem = item.value;
+          double proximity = circleItem.circle.radius;
           double distance = gm_utils.SphericalUtils.computeDistanceBetween(
               Point(currentLocation.latitude ?? 0.0,
                   currentLocation.longitude ?? 0.0),
-              Point(markerItem.marker.position.latitude,
-                  markerItem.marker.position.longitude));
+              Point(circleItem.circle.center.latitude,
+                  circleItem.circle.center.longitude));
           if (distance <= proximity) {
             // Initialize the FlutterLocalNotificationsPlugin
             notificationService.notify(
-                'You are here!', '${markerItem.title} is reached.');
-            markers_to_be_deleted.add(item.key);
+                'You are here!', '${circleItem.title} is reached.');
+            circles_to_be_deleted.add(item.key);
           }
         }
 
-        for (var item in markers_to_be_deleted) {
-          markerProvider.removeMarker(item);
+        for (var item in circles_to_be_deleted) {
+          circleProvider.removeCircle(item);
         }
-        markers_to_be_deleted.clear();
+        circles_to_be_deleted.clear();
       }
     });
   }
@@ -117,8 +118,8 @@ class _MapWidget extends State<MapWidget> {
     final lat = detail.result.geometry!.location.lat;
     final lng = detail.result.geometry!.location.lng;
 
-    //markersList.clear();
-    //markersList.add(Marker(markerId: const MarkerId("0"),position: LatLng(lat, lng),infoWindow: InfoWindow(title: detail.result?.name)));
+    markers.clear();
+    markers.add(Marker(markerId: const MarkerId("0"),position: LatLng(lat, lng),infoWindow: InfoWindow(title: detail.result.name)));
 
     setState(() {});
 
@@ -176,13 +177,14 @@ class _MapWidget extends State<MapWidget> {
                   myLocationEnabled: true,
                   myLocationButtonEnabled: true,
                   onMapCreated: _onMapCreated,
-                  markers: parentContext.watch<MarkerProvider>().markers,
+                  circles: parentContext.watch<CircleProvider>().circles,
+                  markers: markers,
                   onTap: (latLng) {
                     setState(() {
                       showDialog(
                           context: parentContext,
                           builder: (BuildContext context) {
-                            return AddMarker(
+                            return AddCircle(
                               latLng: latLng,
                               parentContext: parentContext,
                             );

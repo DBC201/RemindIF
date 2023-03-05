@@ -3,23 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/marker_provider.dart';
+import '../providers/circle_provider.dart';
 
-class MarkerDialog extends StatefulWidget {
-  final MarkerId markerId;
+class CircleDialog extends StatefulWidget {
+  final CircleId circleId;
 
-  MarkerDialog({required this.markerId});
+  CircleDialog({required this.circleId});
 
   @override
-  _MarkerDialogState createState() => _MarkerDialogState();
+  _CircleDialogState createState() => _CircleDialogState();
 }
 
-class _MarkerDialogState extends State<MarkerDialog> {
+class _CircleDialogState extends State<CircleDialog> {
   @override
   Widget build(BuildContext context) {
-    final markerProvider = context.read<MarkerProvider>();
+    final reminderProvider = context.read<CircleProvider>();
     return AlertDialog(
-      title: Text('Delete Marker?'),
+      title: Text('Delete reminder?'),
       content: SizedBox(
         height: 120,
         child: Column(
@@ -27,7 +27,7 @@ class _MarkerDialogState extends State<MarkerDialog> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'Do you want to delete this marker?',
+              'Do you want to delete this reminder?',
               style: TextStyle(fontSize: 18),
             ),
             const SizedBox(height: 16),
@@ -37,7 +37,7 @@ class _MarkerDialogState extends State<MarkerDialog> {
                 ElevatedButton(
                   onPressed: () {
                     setState(() {
-                      markerProvider.removeMarker(widget.markerId);
+                      reminderProvider.removeCircle(widget.circleId);
                     });
                     Navigator.pop(context);
                   },

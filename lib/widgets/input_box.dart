@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class InputBox extends StatefulWidget {
-  final Function(String, int) onSubmit;
+  final Function(String, double) onSubmit;
   final Function() onCancel;
 
   InputBox({required this.onSubmit, required this.onCancel});
@@ -48,7 +48,7 @@ class _InputBoxState extends State<InputBox> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Marker Title',
+                      'Title',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
@@ -61,7 +61,7 @@ class _InputBoxState extends State<InputBox> {
                         controller: _marker_name_controller,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
-                          hintText: 'Enter Marker Title',
+                          hintText: 'Enter Title',
                         ),
                       ),
                     ),
@@ -107,7 +107,7 @@ class _InputBoxState extends State<InputBox> {
                         onPressed: () {
                           widget.onSubmit(
                             _marker_name_controller.text,
-                            int.parse(_marker_proximity_controller.text),
+                            double.parse(_marker_proximity_controller.text),
                           );
                         },
                         child: Text('Submit'),
