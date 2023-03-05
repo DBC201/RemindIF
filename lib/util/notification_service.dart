@@ -7,7 +7,7 @@ class NotificationService {
   AndroidNotificationDetails androidPlatformChannelSpecifics =
   AndroidNotificationDetails(
       'remind_if_main', 'location reminder', channelDescription: '',
-      importance: Importance.high, priority: Priority.high, sound: RawResourceAndroidNotificationSound('buddy'),
+      importance: Importance.high, priority: Priority.high, sound: RawResourceAndroidNotificationSound('notification'),
     playSound: true,);
 
   NotificationDetails? platformChannelSpecifics;
