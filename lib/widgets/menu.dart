@@ -14,7 +14,7 @@ class Menu extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            padding: EdgeInsets.symmetric(vertical: 54, horizontal: 10),
+            padding: EdgeInsets.symmetric(vertical: kToolbarHeight, horizontal: 10),
             color: Theme.of(context).primaryColor,
           ),
           Container(
