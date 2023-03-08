@@ -118,8 +118,22 @@ class _MapWidget extends State<MapWidget> {
     final lat = detail.result.geometry!.location.lat;
     final lng = detail.result.geometry!.location.lng;
 
+    LatLng latLng = LatLng(lat, lng);
+
     markers.clear();
-    markers.add(Marker(markerId: const MarkerId("0"),position: LatLng(lat, lng),infoWindow: InfoWindow(title: detail.result.name)));
+    Marker marker = Marker(markerId: const MarkerId("0"),position: latLng, onTap: () {
+      setState(() {
+        showDialog(
+            context: parentContext,
+            builder: (BuildContext context) {
+              return AddCircle(
+                latLng: latLng,
+                parentContext: parentContext,
+              );
+            });
+      });
+    }, infoWindow: InfoWindow(title: detail.result.name));
+    markers.add(marker);
 
     setState(() {});
 

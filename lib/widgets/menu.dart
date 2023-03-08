@@ -11,29 +11,45 @@ class Menu extends StatelessWidget {
   Widget build(BuildContext context) {
     final mapControllerProvider = context.read<MapControllerProvider>();
     return Drawer(
-      child: Consumer<CircleProvider>(
-        builder: (context, provider, child) {
-          return ListView.builder(
-            itemCount: provider.circleItems?.length,
-            itemBuilder: (BuildContext context, int index) {
-              final key = provider.circleItems?.keys.elementAt(index);
-              final value = provider.circleItems?[key];
-              return ListTile(
-                title: Text(value?.title ?? ''),
-                onTap: () async {
-                  final circle = value?.circle;
-                  if (circle != null) {
-                    final cameraPosition = CameraPosition(
-                      target: circle.center,
-                      zoom: 15,
-                    );
-                    await mapControllerProvider.mapController?.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-                  }
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 54, horizontal: 10),
+            color: Theme.of(context).primaryColor,
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+            child: Text(
+              'Reminders',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Consumer<CircleProvider>(
+            builder: (context, provider, child) {
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: provider.circleItems?.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final key = provider.circleItems?.keys.elementAt(index);
+                  final value = provider.circleItems?[key];
+                  return ListTile(
+                    title: Text(value?.title ?? ''),
+                    onTap: () async {
+                      final circle = value?.circle;
+                      if (circle != null) {
+                        final cameraPosition = CameraPosition(
+                          target: circle.center,
+                          zoom: 15,
+                        );
+                        await mapControllerProvider.mapController?.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+                      }
+                    },
+                  );
                 },
               );
             },
-          );
-        },
+          ),
+        ],
       ),
     );
   }
