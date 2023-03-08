@@ -89,7 +89,7 @@ class BackgroundService{
         androidSettings: AndroidSettings(
             accuracy: LocationAccuracy.NAVIGATION,
             interval: 5,
-            distanceFilter: 0,/*
+            distanceFilter: 0,
             androidNotificationSettings: AndroidNotificationSettings(
                 notificationChannelName: 'Background location tracking',
                 notificationTitle: 'RemindIF',
@@ -98,6 +98,6 @@ class BackgroundService{
                 'RemindIF is tracking location in the background. This is required for main features to work properly when the app is not running.',
                 notificationIcon: "@mipmap/ic_launcher",
                 notificationTapCallback:
-                notificationCallback)*/));
+                notificationCallback)));
   }
 }
