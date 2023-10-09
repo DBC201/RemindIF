@@ -10,9 +10,6 @@ jobs:
     name: Build APK
     runs-on: ubuntu-latest
 
-    env:
-      google_maps_api_key: ${{ secrets.GOOGLE_MAPS_API_KEY }}
-
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v2
@@ -25,7 +22,10 @@ jobs:
       - run: flutter pub get
 #      - run: flutter packages pub run build_runner build # adding these as pre generated
       - run: flutter pub run flutter_launcher_icons
-      - run: touch .env
+      - name: Make .env file
+          uses: SpicyPizza/create-envfile@v2.0
+          with:
+            envkey_google_maps_api_key: ${{ secrets.GOOGLE_MAPS_API_KEY }}
       # - run: flutter test
       - run: flutter build apk
       - name: Upload apk
@@ -37,10 +37,3 @@ jobs:
           tag: "${{ github.run_id }}"
           body: "commit: ${{ github.sha }}, build run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           artifacts: "build/app/outputs/flutter-apk/app-release.apk"
-
-  cleanup:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: delete .env
-        run: rm .env
