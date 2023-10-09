@@ -74,7 +74,7 @@ class _InputBoxState extends State<InputBox> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Proximity in Meters (must be greater than 0)',
+                      'Proximity in Meters (must be greater than or equal to 10)',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,

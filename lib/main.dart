@@ -90,7 +90,8 @@ class _MyMapState extends State<MyMap> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text("Inadequate Permissions"),
-            content: Text("Please make sure permissions \"notifications\" and \"location always\" are enabled. Also make sure \"pause app activity if unused\" is disabled."),
+            content: Text("Please make sure permissions \"notifications\" and \"location always\" are enabled."
+                " Also make sure \"pause app activity if unused\" is disabled. Restart the app after enabling"),
             actions: [
               TextButton(
                 child: Text("Settings"),

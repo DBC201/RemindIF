@@ -1,4 +1,8 @@
 # remind_if
+This is a simple app that draws a circle with set radius on the map and notifies when the user
+enters it. 
+
+***The background task won't start when the phone is restarted until the app is opened once.***
 
 ## Setup
 

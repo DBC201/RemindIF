@@ -30,7 +30,7 @@ class _AddCircleState extends State<AddCircle> {
       title: Text('Add Reminder Area'),
       content: InputBox(
         onSubmit: (String title, double radius) {
-          if (title.isEmpty || radius <= 0) {
+          if (title.isEmpty || radius < 10) {
             Navigator.pop(context);
             return;
           }
