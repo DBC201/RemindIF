@@ -1,4 +1,4 @@
-# remind_if
+# RemindIF
 This is a simple app that draws a circle with set radius on the map and notifies when the user
 enters it. 
 

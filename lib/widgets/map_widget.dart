@@ -9,9 +9,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:location/location.dart' as loc;
 import 'package:provider/provider.dart';
-import 'package:remind_if/models/circle_item.dart';
+import 'package:remindif/models/circle_item.dart';
 import 'package:google_maps_utils/google_maps_utils.dart' as gm_utils;
-import 'package:remind_if/util/notification_service.dart';
+import 'package:remindif/util/notification_service.dart';
 import 'dart:math';
 
 import '../providers/map_controller_provider.dart';

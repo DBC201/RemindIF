@@ -3,8 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hive/hive.dart';
-import 'package:remind_if/models/circle_adapter.dart';
-import 'package:remind_if/models/circle_item.dart';
+import 'package:remindif/models/circle_adapter.dart';
+import 'package:remindif/models/circle_item.dart';
 
 import '../widgets/circle_dialog.dart';
 

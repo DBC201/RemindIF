@@ -5,12 +5,12 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:remind_if/providers/map_controller_provider.dart';
-import 'package:remind_if/providers/circle_provider.dart';
-import 'package:remind_if/util/background_service.dart';
-import 'package:remind_if/util/notification_service.dart';
-import 'package:remind_if/widgets/map_widget.dart';
-import 'package:remind_if/widgets/menu.dart';
+import 'package:remindif/providers/map_controller_provider.dart';
+import 'package:remindif/providers/circle_provider.dart';
+import 'package:remindif/util/background_service.dart';
+import 'package:remindif/util/notification_service.dart';
+import 'package:remindif/widgets/map_widget.dart';
+import 'package:remindif/widgets/menu.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'models/circle_adapter.dart';

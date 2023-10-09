@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:remind_if/providers/map_controller_provider.dart';
-import 'package:remind_if/providers/circle_provider.dart';
+import 'package:remindif/providers/map_controller_provider.dart';
+import 'package:remindif/providers/circle_provider.dart';
 
 class Menu extends StatelessWidget {
   const Menu({super.key});
