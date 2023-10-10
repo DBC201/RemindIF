@@ -23,10 +23,15 @@ jobs:
 #      - run: flutter packages pub run build_runner build # adding these as pre generated
       - run: flutter pub run flutter_launcher_icons
 #      - name: Make .env file
-#        uses: SpicyPizza/create-envfile@v2.0
-#        with:
-#          envkey_google_maps_api_key: ${{ secrets.GOOGLE_MAPS_API_KEY }}
-      - run: echo "google_maps_api_key: ${{ secrets.GOOGLE_MAPS_API_KEY }}" >> .env
+#
+      - name: Set up environment variables
+          #uses: SpicyPizza/create-envfile@v2.0
+          #with:
+          #  envkey_google_maps_api_key: ${{ secrets.GOOGLE_MAPS_API_KEY }}
+          env:
+            GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
+          run: |
+            echo "google_maps_api_key: $GOOGLE_MAPS_API_KEY" >> .env
       # - run: flutter test
       - run: flutter build apk
       - name: Upload apk
