@@ -26,6 +26,7 @@ jobs:
         uses: SpicyPizza/create-envfile@v2.0
         with:
           envkey_google_maps_api_key: "${{ secrets.TEST_VAL }}"
+          envkey_ooga_booga: "ooga booga zooga"
       - run: cat .env
       #- run: flutter test
 #      - run: flutter build apk
