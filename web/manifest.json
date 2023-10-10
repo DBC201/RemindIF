@@ -1,6 +1,6 @@
 {
-    "name": "remind_if",
-    "short_name": "remind_if",
+    "name": "remindif",
+    "short_name": "remindif",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
