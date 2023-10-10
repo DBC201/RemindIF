@@ -9,11 +9,11 @@
         android:label="RemindIF"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
-       <service android:name="yukams.app.background_locator_2.IsolateHolderService"
+        <service android:name="yukams.app.background_locator_2.IsolateHolderService"
            android:permission="android.permission.FOREGROUND_SERVICE"
            android:exported="true"
            android:foregroundServiceType = "location"/>
-       <meta-data
+        <meta-data
            android:name="com.google.android.geo.API_KEY"
            android:value="@string/google_maps_api_key" />
         <activity
@@ -42,7 +42,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-       <service
+        <service
            android:name="com.dexterous.flutterlocalnotifications.ForegroundService"
            android:exported="false"
            android:stopWithTask="false"/>
