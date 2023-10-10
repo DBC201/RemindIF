@@ -26,7 +26,7 @@ jobs:
 #        uses: SpicyPizza/create-envfile@v2.0
 #        with:
 #          envkey_google_maps_api_key: ${{ secrets.GOOGLE_MAPS_API_KEY }}
-      env:
+      - env:
         google_maps_api_key: ${{ secrets.GOOGLE_MAPS_API_KEY }}
       - run: touch .env
       # - run: flutter test
